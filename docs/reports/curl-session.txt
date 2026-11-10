@@ -1,0 +1,80 @@
+Secure Notes API — real curl requests to a local HTTP server
+Temporary in-memory SQLite; generated password and JWT are hidden.
+Expected HTTP codes are checked with assertions.
+
+1. Access without token is denied
+GET /api/data
+HTTP 401
+{
+  "error": "invalid_token"
+}
+
+2. Successful login
+POST /auth/login
+HTTP 200
+{
+  "access_token": "<JWT hidden>",
+  "token_type": "Bearer",
+  "expires_in": 900
+}
+
+3. Wrong password is denied
+POST /auth/login
+HTTP 401
+{
+  "error": "invalid_credentials"
+}
+
+4. SQL injection cannot bypass authentication
+POST /auth/login
+HTTP 401
+{
+  "error": "invalid_credentials"
+}
+
+5. Create a note
+POST /api/notes
+HTTP 201
+{
+  "id": 1,
+  "title": "Lab 1",
+  "content": "My private note"
+}
+
+6. XSS payload is escaped
+POST /api/notes
+HTTP 201
+{
+  "id": 2,
+  "title": "XSS test",
+  "content": "&lt;script&gt;alert(1)&lt;/script&gt;"
+}
+
+7. Read own notes with a valid token
+GET /api/data
+HTTP 200
+[
+  {
+    "id": 1,
+    "title": "Lab 1",
+    "content": "My private note"
+  },
+  {
+    "id": 2,
+    "title": "XSS test",
+    "content": "&lt;script&gt;alert(1)&lt;/script&gt;"
+  }
+]
+
+8. Invalid input is rejected
+POST /api/notes
+HTTP 400
+{
+  "error": "title_and_content_required",
+  "limits": {
+    "title": 120,
+    "content": 4000
+  }
+}
+
+PASS: all 8 curl scenarios matched the expected responses.

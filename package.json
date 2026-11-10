@@ -1,0 +1,29 @@
+{
+  "name": "secure-notes-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Лабораторная работа 1 — защищённый REST API личных заметок",
+  "type": "module",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env src/server.js",
+    "seed": "node --env-file-if-exists=.env src/seed.js",
+    "test": "node --test",
+    "demo": "node scripts/curl-demo.js",
+    "sast": "eslint src --max-warnings 0",
+    "sast:report": "eslint src --max-warnings 0 --format json --output-file reports/sast.json",
+    "audit": "npm audit --audit-level=high"
+  },
+  "dependencies": {
+    "escape-html": "1.0.3",
+    "express": "5.3.0",
+    "express-rate-limit": "8.7.1",
+    "jose": "6.2.13"
+  },
+  "devDependencies": {
+    "eslint": "9.39.5",
+    "eslint-plugin-security": "4.2.0"
+  }
+}

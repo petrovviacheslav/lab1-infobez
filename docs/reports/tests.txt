@@ -1,0 +1,30 @@
+
+> secure-notes-api@1.0.0 test
+> node --test
+
+✔ passwords use salted scrypt; correct password succeeds and wrong one fails (1553.868333ms)
+✔ startup rejects absent or short JWT secret (0.484709ms)
+✔ login returns a usable JWT with a 15 minute lifetime (367.5535ms)
+✔ wrong password, unknown account and SQL injection have the same denial (909.046875ms)
+✔ both protected endpoints reject missing tokens (2.166708ms)
+✔ malformed, wrongly signed and unsigned tokens are rejected (2.929042ms)
+✔ expired, future, incomplete and wrong issuer or audience claims are rejected (8.062375ms)
+✔ tokens using an unexpected signing algorithm are rejected (0.772458ms)
+✔ a valid token for a deleted or nonexistent account is rejected (0.893959ms)
+✔ create note and list data; caller cannot choose another owner (2.602334ms)
+✔ XSS is escaped on creation and read; source text remains in SQLite (1.519625ms)
+✔ SQL-like note text is stored as data and does not change schema (2.30925ms)
+✔ invalid note bodies and out-of-range strings return 400 (5.658459ms)
+✔ login validates body types and field sizes (1.628625ms)
+✔ broken JSON and oversized bodies return JSON errors without stack traces (1.810834ms)
+✔ responses have JSON content type, no-store, nosniff and CSP (0.817ms)
+✔ unknown routes return JSON; future /api routes are also protected (1.545583ms)
+✔ login attempts are limited per IP with Retry-After (5.512958ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3060.810334
