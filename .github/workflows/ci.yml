@@ -8,34 +8,39 @@ on:
 permissions:
   contents: read
 
+env:
+  GIT_CONFIG_COUNT: '1'
+  GIT_CONFIG_KEY_0: init.defaultBranch
+  GIT_CONFIG_VALUE_0: main
+
 jobs:
   tests:
     name: API and security tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version: '24'
-          cache: npm
+          package-manager-cache: false
       - run: npm ci
       - run: npm test
 
   sast:
     name: SAST ESLint Security
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version: '24'
-          cache: npm
+          package-manager-cache: false
       - run: npm ci
       - run: mkdir -p reports
       - run: npm run sast:report
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7.0.2
         if: always()
         with:
           name: sast-report
@@ -44,14 +49,14 @@ jobs:
 
   sca:
     name: SCA OWASP Dependency Check
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version: '24'
-          cache: npm
+          package-manager-cache: false
       - run: npm ci
       - name: Audit all npm dependencies
         run: |
@@ -60,7 +65,7 @@ jobs:
       - name: OWASP Dependency Check
         if: ${{ !cancelled() }}
         run: sh scripts/dependency-check.sh
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7.0.2
         if: always()
         with:
           name: sca-report
