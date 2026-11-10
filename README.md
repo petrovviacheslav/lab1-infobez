@@ -187,3 +187,23 @@ OWASP Dependency-Check — 0 уязвимостей и 0 подавлений.
 [Репозиторий](https://github.com/petrovviacheslav/lab1-infobez) ·
 [Запуски Security CI](https://github.com/petrovviacheslav/lab1-infobez/actions/workflows/ci.yml) ·
 [Успешные запуски](https://github.com/petrovviacheslav/lab1-infobez/actions/workflows/ci.yml?query=is%3Asuccess).
+
+11 ноября 2026 года все три задачи завершились успешно для коммита `01efac2`.
+GitHub Actions не выдал аннотаций. [Запуск Security CI № 2](https://github.com/petrovviacheslav/lab1-infobez/actions/runs/42907029563).
+
+- **API and security tests.** Прошли все 18 тестов.
+- **SAST ESLint Security.** Проверены 5 файлов. Ошибок и предупреждений нет.
+- **SCA OWASP Dependency Check.** npm audit проверил 147 зависимостей и не нашёл уязвимостей.
+  OWASP Dependency-Check также не нашёл уязвимостей. Подавлений нет.
+
+![Успешный запуск Security CI № 2 в GitHub Actions](docs/screenshots/04-github-summary.png)
+
+*Рисунок 1. Страница запуска с итогами трёх задач и двумя артефактами.*
+
+![Результаты ESLint Security из артефакта sast-report](docs/screenshots/05-github-sast.png)
+
+*Рисунок 2. Таблица по данным файла sast.json из артефакта sast-report.*
+
+![Отчёт OWASP Dependency-Check из артефакта sca-report](docs/screenshots/06-github-sca.png)
+
+*Рисунок 3. HTML-отчёт OWASP Dependency-Check из артефакта sca-report.*
